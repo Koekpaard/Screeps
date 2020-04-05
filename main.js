@@ -1,4 +1,12 @@
 module.exports.loop = function () {
+    // Do I have the max amount of energy? Build something then.
+    var spawn1 = Game.spawns['Spawn1'];
+    if (spawn1.store.getFreeCapacity(RESOURCE_ENERGY) == 0)
+    {
+        var creepName = 'Harvester' + Game.time;
+        spawn1.spawnCreep([WORK, MOVE, CARRY, MOVE], creepName, { memory: { "role": "harvester" } });
+    }
+    
     for(var creepName in Game.creeps)
     {
         var creep = Game.creeps[creepName];
@@ -21,6 +29,7 @@ module.exports.loop = function () {
                 creep.moveTo(Game.spawns['Spawn1']);
             } else if (attemptToTransfer == ERR_FULL) {
                 // I have saved too much. Build something.
+                console.log('Wasting energy right now');
             }
         }
     }
